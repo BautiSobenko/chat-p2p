@@ -38,9 +38,10 @@ public class ControladorConfiguracion implements ActionListener{
 			String IP = "localhost";
 
 	        ControladorInicio controladorInicio = ControladorInicio.get(true);
-
+	        
 			conexionReceptor = new ConexionReceptor(IP,vista.getPuerto());
 			controladorInicio.setConexionReceptor(conexionReceptor);
+			controladorInicio.setMiPuerto(vista.getPuerto());
 
 			this.vista.esconder();
 

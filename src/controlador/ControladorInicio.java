@@ -17,11 +17,14 @@ public class ControladorInicio implements ActionListener {
     private IVistaInicio vista;
     private ConexionReceptor conexionReceptor;
     private ConexionEnvio conexionEnvio;
-
+    private int miPuerto;
+    
     int envio=0;
     Socket socketCliente=null;
     String ultMensaje;
 
+    private ControladorSesionLlamada controladorSesionLlamada;
+    
     private ControladorInicio() {
         this.vista = new VistaInicio();
         this.vista.setActionListener(this);
@@ -39,6 +42,7 @@ public class ControladorInicio implements ActionListener {
 
     public void setConexionReceptor(ConexionReceptor conexion){
         this.conexionReceptor = conexion;
+        this.conexionReceptor.setControladorInicio(this);
         this.conexionReceptor.start();
     }
 
@@ -54,19 +58,37 @@ public class ControladorInicio implements ActionListener {
             break;
 
             case "Conectar":
+            	envio=1;
                 String IP = vista.getIP();
                 System.out.println(IP);
                 int puerto = vista.getPuerto();
                 this.vista.limpiarCampo();
                 try {
                     this.conexionEnvio = new ConexionEnvio(IP, puerto);
-                    ControladorSesionLlamada.get(true);
+                    controladorSesionLlamada = ControladorSesionLlamada.get(false);
+                    controladorSesionLlamada.setConexionEnvio(this.conexionEnvio);
+                    conexionEnvio.envia(Integer.toString(miPuerto));
+                    controladorSesionLlamada.setConexionReceptor(conexionReceptor);
+                    vista.lanzarVentanaEmergente("Esperando a ser atendido...");
                 } catch (SocketException ex) {
                     //TODO: Ventana emergente
-                    System.out.println("No se puede comunicar");
+                    vista.error("Error en la conexion");
                 }
                 break;
         }
 
     }
+    
+    public void setMiPuerto(int puerto) {
+    	this.miPuerto = puerto;
+    }
+    
+    public boolean noEnvie() {
+    	return envio==0;
+    }
+    
+    public void esconderVista() {
+    	this.vista.esconder();
+    }
+    
 }

@@ -10,4 +10,6 @@ public interface IVistaSesionLlamada {
     String getMensaje();
     void agregarLineaChat(String mensaje);
     void limpiarCampo();
+	public void lanzarVentanaEmergente(String string);
+    public void error(String string);
 }

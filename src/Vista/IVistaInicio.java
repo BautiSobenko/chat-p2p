@@ -11,5 +11,5 @@ public interface IVistaInicio {
     void limpiarCampo();
     public void mostrar();
     public void esconder();
-
+    public void error(String mensaje);
 }

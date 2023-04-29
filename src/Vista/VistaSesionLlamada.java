@@ -3,6 +3,7 @@ package Vista;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
@@ -95,5 +96,18 @@ public class VistaSesionLlamada extends JFrame implements IVistaSesionLlamada {
 	@Override
 	public void limpiarCampo() {
 		this.txtMensaje.setText("");
+	}
+
+	@Override
+	public void lanzarVentanaEmergente(String string) {
+		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(this,string);
+	}
+
+	@Override
+	public void error(String string) {
+		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(this,string,"Error",JOptionPane.ERROR_MESSAGE);
+		
 	}
 }

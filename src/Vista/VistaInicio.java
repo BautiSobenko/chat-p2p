@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import javax.swing.JTextField;
@@ -113,7 +115,7 @@ public class VistaInicio extends JFrame implements IVistaInicio {
 
 	@Override
 	public void lanzarVentanaEmergente(String mensaje) {
-
+		JOptionPane.showMessageDialog(this,mensaje);
 	}
 
 	@Override
@@ -130,5 +132,11 @@ public class VistaInicio extends JFrame implements IVistaInicio {
 	@Override
 	public void esconder() {
 		this.setVisible(false);
+	}
+
+	@Override
+	public void error(String mensaje) {
+		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(this,mensaje,"Error",JOptionPane.ERROR_MESSAGE);
 	}
 }

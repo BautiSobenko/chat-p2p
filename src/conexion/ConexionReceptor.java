@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.Socket;
 
+import controlador.ControladorInicio;
 import controlador.ControladorRecepcionLlamada;
 import controlador.ControladorSesionLlamada;
 
@@ -13,7 +14,11 @@ public class ConexionReceptor extends Thread{
 
 	private String ip;
 	private int puerto;
-	private ControladorSesionLlamada controlador;
+	private ControladorSesionLlamada controladorllamada;
+	private ControladorInicio controladorInicio;
+	private Thread hiloEscucha;
+	private Socket socket;
+	private ServerSocket serverSocket;
 
     public ConexionReceptor(String IP, int puerto) throws IOException{
         this.puerto = puerto;
@@ -23,18 +28,21 @@ public class ConexionReceptor extends Thread{
 	//Caso de modo escucha
 	public void run(){
 		try { 
-			ServerSocket serverSocket = new ServerSocket(puerto);
+			serverSocket = new ServerSocket(puerto);
 			System.out.println("Esperando conexion en el puerto "+ puerto);
 			while (true) {
-				Socket socket = serverSocket.accept();
+				socket = serverSocket.accept();
 				System.out.println("PASE");
 
-				ControladorRecepcionLlamada	 controladorRecepcion = ControladorRecepcionLlamada.get(false);
-				controladorRecepcion.setSocket(socket);
-				ControladorRecepcionLlamada.get(true);
-				if( controladorRecepcion.isConexionAceptada() ){
+				if (controladorInicio.noEnvie()) {
+					ControladorRecepcionLlamada	 controladorRecepcion = ControladorRecepcionLlamada.get(false);
 					controladorRecepcion.setSocket(socket);
-					new Thread( controladorRecepcion.creaHiloEscucha() ).start();
+					controladorRecepcion.setControladorInicio(controladorInicio);
+					ControladorRecepcionLlamada.get(true);
+				}
+				else {
+					this.hiloEscucha = new HiloEscucha(socket, ControladorSesionLlamada.get(false));
+					this.hiloEscucha.start();
 				}
 			}
 			} catch (Exception e) {
@@ -43,13 +51,24 @@ public class ConexionReceptor extends Thread{
 			}
 	}
 
-	public void setControlador(ControladorSesionLlamada controlador) {
-		this.controlador = controlador;
+	public void setControladorLlamada(ControladorSesionLlamada controlador) {
+		this.controladorllamada = controlador;
 	}
 	
 	
 	public void stopServer() {
-		this.interrupt();
+		try {
+			this.hiloEscucha.interrupt();
+			this.interrupt();
+			this.socket.close();
+			this.serverSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
+	public void setControladorInicio(ControladorInicio controlador) {
+		this.controladorInicio = controlador;
+	}
 }

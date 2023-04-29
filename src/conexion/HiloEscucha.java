@@ -4,16 +4,20 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+
+import controlador.ControladorInicio;
 import controlador.ControladorSesionLlamada;
 
 public class HiloEscucha extends Thread{
 	
 	private Socket socket;
-	private ControladorSesionLlamada controlador;
+	private ControladorSesionLlamada controladorllamada;
+	private ControladorInicio controladorInicio;
 	
 	public HiloEscucha(Socket socket, ControladorSesionLlamada controlador) {
 		this.socket = socket;
-		this.controlador = controlador;
+		this.controladorllamada = controlador;
+		this.controladorInicio = ControladorInicio.get(false);
 	}
 
 	public void run() {
@@ -23,21 +27,25 @@ public class HiloEscucha extends Thread{
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             /* Mensajes recibidos */
             String mensaje;
-            
             while (true) {
                 mensaje = in.readLine();
-                System.out.println("Mensaje  " + mensaje);
-                
-                controlador.muestraMensaje(socket.getPort()+": "+ mensaje);
+                if (controladorllamada.noTengoConexionEnvio()) {
+                	controladorllamada.creaConexionEnvio(Integer.parseInt(mensaje));
+                }
+                else
+                	if(mensaje.equals("ACEPTO LLAMADA")) {
+                		controladorllamada.get(true);
+                		controladorInicio.esconderVista();
+                	}
+                	else
+                		if(mensaje.equals("DESCONECTAR"))
+                			controladorllamada.desconectar();
+                		else
+                			controladorllamada.muestraMensaje(socket.getPort()+": "+ mensaje);
             }
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
-        /* Cerramos el socket */
-        try {
-            socket.close();
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
+	
 }
