@@ -10,6 +10,8 @@ import conexion.ConexionReceptor;
 import Vista.IVista;
 import Vista.VistaSesion;
 
+//! NO VA
+
 public class ControladorSesion implements ActionListener{
 
     private IVista vista;
@@ -32,7 +34,7 @@ public class ControladorSesion implements ActionListener{
 				this.ultMensaje = vista.getMensaje();
 				vista.limpiarCampo();
             	if (envio==0) {	
-            		this.conexionEnvio = new ConexionEnvio(vista.getIP(),vista.getPuerto(),this);
+            		//this.conexionEnvio = new ConexionEnvio(vista.getIP(),vista.getPuerto(),this);
             		envio=1;
             		}
             	this.conexionEnvio.envia(ultMensaje);

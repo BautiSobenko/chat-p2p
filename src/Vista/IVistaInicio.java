@@ -2,14 +2,14 @@ package Vista;
 
 import java.awt.event.ActionListener;
 
-public interface IVista {
+public interface IVistaInicio {
+
     void setActionListener(ActionListener controlador);
-    void ejecutar();
     String getIP();
     int getPuerto();
-    String getMensaje();
     void lanzarVentanaEmergente(String mensaje);
-    void borrarMensaje();
-    void agregarLineaChat(String mensaje);
     void limpiarCampo();
+    public void mostrar();
+    public void esconder();
+
 }

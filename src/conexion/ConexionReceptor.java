@@ -6,22 +6,22 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import controlador.ControladorConfiguracion;
+import controlador.ControladorRecepcionLlamada;
 import controlador.ControladorSesion;
+import controlador.ControladorSesionLlamada;
 
 import java.net.ServerSocket;
 
 public class ConexionReceptor extends Thread{
 
-	String ip;
-	int puerto;
-	ControladorSesion controlador;
-	
+	private String ip;
+	private int puerto;
+	private ControladorSesionLlamada controlador;
+
     public ConexionReceptor(String IP, int puerto) throws IOException{
-        this.puerto= puerto;
-        this.ip= IP;
-        
-        //crearCliente();
-        //crearServidor();
+        this.puerto = puerto;
+        this.ip = IP;
     }
     
 	//Caso de modo escucha
@@ -31,7 +31,15 @@ public class ConexionReceptor extends Thread{
 			System.out.println("Esperando conexion en el puerto "+ puerto);
 			while (true) {
 				Socket socket = serverSocket.accept();
-				new Thread(new HiloEscucha(socket,controlador)).start();
+				System.out.println("PASE");
+
+				ControladorRecepcionLlamada	 controladorRecepcion = ControladorRecepcionLlamada.get(false);
+				controladorRecepcion.setSocket(socket);
+				ControladorRecepcionLlamada.get(true);
+				if( controladorRecepcion.isConexionAceptada() ){
+					controladorRecepcion.setSocket(socket);
+					new Thread( controladorRecepcion.creaHiloEscucha() ).start();
+				}
 			}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -39,7 +47,7 @@ public class ConexionReceptor extends Thread{
 			}
 	}
 
-	public void setControlador(ControladorSesion controlador) {
+	public void setControlador(ControladorSesionLlamada controlador) {
 		this.controlador = controlador;
 	}
 	

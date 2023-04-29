@@ -7,30 +7,36 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 import controlador.ControladorSesion;
+import controlador.ControladorSesionLlamada;
 
-public class ConexionEnvio extends Thread{
+public class ConexionEnvio{
+
 	private String Ip;
 	private int puerto;
+
 	private Socket socket;
-	private BufferedReader in;
 	private PrintWriter out;
-	private ControladorSesion controlador;
-	private String mensaje = null;
+
 	
-	
-	public ConexionEnvio (String ip,int puerto,ControladorSesion controlador){
+	public ConexionEnvio (String ip, int puerto) throws SocketException {
 		this.Ip = ip;
 		this.puerto = puerto;
-		this.controlador = controlador;
+
 		try {
-			socket = new Socket(this.Ip,this.puerto);
+
+			this.socket = new Socket(this.Ip,this.puerto);
 			out = new PrintWriter(socket.getOutputStream(),true);
-			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+		} catch (SocketException e) {
+			throw new SocketException();
+		} catch (UnknownHostException e) {
+			throw new RuntimeException(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 		

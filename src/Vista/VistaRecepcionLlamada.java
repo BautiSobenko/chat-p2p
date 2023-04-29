@@ -11,9 +11,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
 
-public class VistaRecepcionLlamada extends JFrame {
+public class VistaRecepcionLlamada extends JFrame implements IVistaRecepcionLlamada{
 
 	private JPanel contentPane;
+	private JButton btnAceptar;
+	private JButton btnRechazar;
+	private JLabel lblPuerto;
 
 	/**
 	 * Launch the application.
@@ -35,35 +38,60 @@ public class VistaRecepcionLlamada extends JFrame {
 	 * Create the frame.
 	 */
 	public VistaRecepcionLlamada() {
+		setTitle("Llamada Entrante");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 420, 264);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar = new JButton("Aceptar");
+		btnAceptar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnAceptar.setBounds(52, 147, 89, 23);
+		btnAceptar.setBounds(244, 131, 111, 36);
 		contentPane.add(btnAceptar);
 		
-		JButton btnRechazar = new JButton("Rechazar");
-		btnRechazar.setBounds(267, 147, 89, 23);
+		btnRechazar = new JButton("Rechazar");
+		btnRechazar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnRechazar.setBounds(57, 131, 102, 36);
 		contentPane.add(btnRechazar);
 		
-		JLabel lblNewLabel = new JLabel("Chat entrante del puerto: ");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel.setBounds(57, 25, 299, 36);
-		contentPane.add(lblNewLabel);
+		lblPuerto = new JLabel("Llamada entrante del puerto: ");
+		lblPuerto.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblPuerto.setBounds(76, 25, 299, 36);
+		contentPane.add(lblPuerto);
 		
-		JLabel lblNewLabel_1 = new JLabel("¿Desea conectar?");
+		JLabel lblNewLabel_1 = new JLabel("\u00BFDesea conectar?");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(139, 86, 137, 14);
+		lblNewLabel_1.setBounds(134, 79, 147, 14);
 		contentPane.add(lblNewLabel_1);
 	}
 
+
+
+	@Override
+	public void setActionListener(ActionListener controlador) {
+		this.btnAceptar.addActionListener(controlador);
+		this.btnRechazar.addActionListener(controlador);
+	}
+
+	@Override
+	public void mostrar() {
+		this.setVisible(true);
+	}
+
+	@Override
+	public void esconder() {
+		this.setVisible(false);
+	}
+
+	@Override
+	public void setLabelPuerto(String puerto) {
+		this.lblPuerto.setText(lblPuerto.getText() + puerto);
+	}
 }

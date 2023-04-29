@@ -2,18 +2,16 @@ package Vista;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
+import java.awt.event.ActionListener;
 
-public class VistaConfiguracionPuerto extends JFrame {
+public class VistaConfiguracionPuerto extends JFrame implements IVistaConfiguracion  {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtPuerto;
+	private JButton btnContinuar;
 
 	/**
 	 * Launch the application.
@@ -49,15 +47,37 @@ public class VistaConfiguracionPuerto extends JFrame {
 		lblNewLabel.setBounds(74, 22, 261, 30);
 		contentPane.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(120, 63, 159, 30);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtPuerto = new JTextField();
+		txtPuerto.setBounds(120, 63, 159, 30);
+		contentPane.add(txtPuerto);
+		txtPuerto.setColumns(10);
+		txtPuerto.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JButton btnContinuar = new JButton("Continuar");
+		btnContinuar = new JButton("Continuar");
 		btnContinuar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnContinuar.setBounds(83, 115, 236, 43);
 		contentPane.add(btnContinuar);
 	}
 
+	public void setActionListener(ActionListener controlador) {
+		this.btnContinuar.addActionListener(controlador);
+	}
+
+	public String getIP() {
+		return "";
+	}
+
+	public int getPuerto() {
+		return Integer.parseInt(this.txtPuerto.getText());
+	}
+
+	@Override
+	public void mostrar() {
+		this.setVisible(true);
+	}
+
+	@Override
+	public void esconder() {
+		this.setVisible(false);
+	}
 }
