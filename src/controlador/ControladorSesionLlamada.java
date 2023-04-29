@@ -1,14 +1,11 @@
 package controlador;
 
-import Vista.IVistaRecepcionLlamada;
 import Vista.IVistaSesionLlamada;
-import Vista.VistaRecepcionLlamada;
 import Vista.VistaSesionLlamada;
 import conexion.ConexionEnvio;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class ControladorSesionLlamada implements ActionListener {
 
@@ -55,10 +52,6 @@ public class ControladorSesionLlamada implements ActionListener {
             case("Enviar"):
                 ultMensaje = vista.getMensaje();
                 vista.limpiarCampo();
-                if( !primerEnvio ){
-                    //TODO:
-                    this.primerEnvio = true;
-                }
                 this.conexionEnvio.envia(ultMensaje);
                 this.muestraMensaje("Yo: " + ultMensaje);
             break;

@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
-import controlador.ControladorSesion;
 import controlador.ControladorSesionLlamada;
 
 public class HiloEscucha extends Thread{

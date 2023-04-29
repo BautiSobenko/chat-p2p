@@ -2,6 +2,7 @@ package controlador;
 
 import Vista.IVistaRecepcionLlamada;
 import Vista.VistaRecepcionLlamada;
+import conexion.ConexionEnvio;
 import conexion.HiloEscucha;
 
 import java.awt.event.ActionEvent;
@@ -54,6 +55,10 @@ public class ControladorRecepcionLlamada implements ActionListener {
             case("Aceptar"):
                 this.conexionAceptada = true;
                 ControladorSesionLlamada.get(true);
+
+                //Podria setear con el socket que me contacto
+                //?ControladorSesionLlamada.get(false).setConexionEnvio
+
                 this.vista.esconder();
                 ControladorInicio.get(false);
             break;
