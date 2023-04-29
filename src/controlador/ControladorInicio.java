@@ -4,9 +4,11 @@ import Vista.IVistaInicio;
 import Vista.VistaInicio;
 import conexion.ConexionEnvio;
 import conexion.ConexionReceptor;
+import configuracion.Configuracion;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
@@ -35,8 +37,9 @@ public class ControladorInicio implements ActionListener {
         if( controladorInicio == null) {
             controladorInicio = new ControladorInicio();
         }
-        if( mostrar )
+        if( mostrar ) {
             controladorInicio.vista.mostrar();
+        }
 
         return controladorInicio;
     }
@@ -97,5 +100,11 @@ public class ControladorInicio implements ActionListener {
     public void esconderVista() {
     	this.vista.esconder();
     }
-    
+
+    public void verificarBoton(){
+        if (Configuracion.puertoValido())
+            this.vista.habilitarBotonConexion();
+        else
+            this.vista.deshabilitarBotonConexion();
+    }
 }

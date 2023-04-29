@@ -1,5 +1,7 @@
 package Vista;
 
+import configuracion.Configuracion;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -75,6 +77,8 @@ public class VistaInicio extends JFrame implements IVistaInicio {
 		contentPane.add(txtPuerto);
 		
 		btnConectar = new JButton("Conectar");
+		if (Configuracion.puertoValido() == false)
+			this.deshabilitarBotonConexion();
 		btnConectar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnConectar.setBounds(293, 194, 124, 48);
 		contentPane.add(btnConectar);
@@ -139,4 +143,12 @@ public class VistaInicio extends JFrame implements IVistaInicio {
 		// TODO Auto-generated method stub
 		JOptionPane.showMessageDialog(this,mensaje,"Error",JOptionPane.ERROR_MESSAGE);
 	}
+
+	public void habilitarBotonConexion(){
+		this.btnConectar.setEnabled(true);
+	}
+	public void deshabilitarBotonConexion(){
+		this.btnConectar.setEnabled(false);
+	}
+
 }

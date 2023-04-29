@@ -12,4 +12,6 @@ public interface IVistaInicio {
     public void mostrar();
     public void esconder();
     public void error(String mensaje);
+    void deshabilitarBotonConexion();
+    void habilitarBotonConexion();
 }

@@ -1,5 +1,7 @@
 package Vista;
 
+import configuracion.Configuracion;
+
 import java.awt.EventQueue;
 
 import javax.swing.*;
@@ -52,6 +54,7 @@ public class VistaConfiguracionPuerto extends JFrame implements IVistaConfigurac
 		contentPane.add(txtPuerto);
 		txtPuerto.setColumns(10);
 		txtPuerto.setHorizontalAlignment(SwingConstants.CENTER);
+		txtPuerto.setText(String.valueOf(Configuracion.puertoDesdeArchivo()));
 		
 		btnContinuar = new JButton("Continuar");
 		btnContinuar.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -80,4 +83,10 @@ public class VistaConfiguracionPuerto extends JFrame implements IVistaConfigurac
 	public void esconder() {
 		this.setVisible(false);
 	}
+
+	@Override
+	public void lanzarVentanaEmergente(String mensaje) {
+		JOptionPane.showMessageDialog(this,mensaje);
+	}
+
 }

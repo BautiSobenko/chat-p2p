@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import Vista.*;
 import conexion.ConexionReceptor;
+import configuracion.Configuracion;
 
 
 public class ControladorConfiguracion implements ActionListener{
@@ -38,15 +39,19 @@ public class ControladorConfiguracion implements ActionListener{
 			String IP = "localhost";
 
 	        ControladorInicio controladorInicio = ControladorInicio.get(true);
-	        
-			conexionReceptor = new ConexionReceptor(IP,vista.getPuerto());
-			controladorInicio.setConexionReceptor(conexionReceptor);
-			controladorInicio.setMiPuerto(vista.getPuerto());
-
-			this.vista.esconder();
-
+			Configuracion.escribirPuertoArchivo(vista.getPuerto());
+			if (Configuracion.puertoValido()) {
+				conexionReceptor = new ConexionReceptor(IP, vista.getPuerto());
+				controladorInicio.setConexionReceptor(conexionReceptor);
+				controladorInicio.setMiPuerto(vista.getPuerto());
+			}	
+				controladorInicio.verificarBoton();
+				this.vista.esconder();
 		} catch (IOException exception) {
 			//TODO: Validar Puerto
+		}catch (Exception exception){
+			vista.lanzarVentanaEmergente("Error al ingresar Puerto");
+
 		}
 	}
 
