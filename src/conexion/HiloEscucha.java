@@ -32,16 +32,19 @@ public class HiloEscucha extends Thread{
                 if (controladorllamada.noTengoConexionEnvio()) {
                 	controladorllamada.creaConexionEnvio(Integer.parseInt(mensaje));
                 }
-                else
+                else{
                 	if(mensaje.equals("ACEPTO LLAMADA")) {
                 		controladorllamada.get(true);
                 		controladorInicio.esconderVista();
                 	}
                 	else
-                		if(mensaje.equals("DESCONECTAR"))
-                			controladorllamada.desconectar();
+                		if(mensaje.equals("DESCONECTAR")){
+							controladorllamada.desconectar();
+						}
+
                 		else
                 			controladorllamada.muestraMensaje(socket.getPort()+": "+ mensaje);
+				}
             }
         } catch(Exception e) {
             System.out.println(e.getMessage());

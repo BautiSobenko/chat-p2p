@@ -78,7 +78,6 @@ public class ControladorSesionLlamada implements ActionListener {
 			this.conexionEnvio = new ConexionEnvio("localhost",puerto);
 			this.conexionEnvio.envia("ACEPTO LLAMADA");
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -93,15 +92,15 @@ public class ControladorSesionLlamada implements ActionListener {
     public void desconectar() {
     	try {
     		vista.esconder();
-        	vista.lanzarVentanaEmergente("La llamada a finalizado");
+        	vista.lanzarVentanaEmergente("Llamada finalizada");
 			this.conexionEnvio.stopServer();
 	        this.conexionReceptor.stopServer();
 	        this.controladorInicio = ControladorInicio.get(true);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
+
 
 
 }

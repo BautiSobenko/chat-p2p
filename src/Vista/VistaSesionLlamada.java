@@ -100,13 +100,11 @@ public class VistaSesionLlamada extends JFrame implements IVistaSesionLlamada {
 
 	@Override
 	public void lanzarVentanaEmergente(String string) {
-		// TODO Auto-generated method stub
-		JOptionPane.showMessageDialog(this,string);
+		JOptionPane.showMessageDialog(this,string,"Aviso",JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	@Override
 	public void error(String string) {
-		// TODO Auto-generated method stub
 		JOptionPane.showMessageDialog(this,string,"Error",JOptionPane.ERROR_MESSAGE);
 		
 	}

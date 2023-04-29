@@ -71,7 +71,6 @@ public class ControladorInicio implements ActionListener {
                     controladorSesionLlamada.setConexionReceptor(conexionReceptor);
                     vista.lanzarVentanaEmergente("Esperando a ser atendido...");
                 } catch (SocketException ex) {
-                    //TODO: Ventana emergente
                     vista.error("Error en la conexion");
                 }
                 break;

@@ -19,6 +19,7 @@ public class ConexionReceptor extends Thread{
 	private Thread hiloEscucha;
 	private Socket socket;
 	private ServerSocket serverSocket;
+	private boolean stop;
 
     public ConexionReceptor(String IP, int puerto) throws IOException{
         this.puerto = puerto;
@@ -30,17 +31,16 @@ public class ConexionReceptor extends Thread{
 		try { 
 			serverSocket = new ServerSocket(puerto);
 			System.out.println("Esperando conexion en el puerto "+ puerto);
-			while (true) {
-				socket = serverSocket.accept();
-				System.out.println("PASE");
+			while ( true ) {
+
+				this.socket = serverSocket.accept();
 
 				if (controladorInicio.noEnvie()) {
-					ControladorRecepcionLlamada	 controladorRecepcion = ControladorRecepcionLlamada.get(false);
+					ControladorRecepcionLlamada controladorRecepcion = ControladorRecepcionLlamada.get(false);
 					controladorRecepcion.setSocket(socket);
 					controladorRecepcion.setControladorInicio(controladorInicio);
 					ControladorRecepcionLlamada.get(true);
-				}
-				else {
+				} else {
 					this.hiloEscucha = new HiloEscucha(socket, ControladorSesionLlamada.get(false));
 					this.hiloEscucha.start();
 				}
@@ -57,15 +57,11 @@ public class ConexionReceptor extends Thread{
 	
 	
 	public void stopServer() {
-		try {
-			this.hiloEscucha.interrupt();
-			this.interrupt();
-			this.socket.close();
-			this.serverSocket.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		this.puerto = 0;
+		this.hiloEscucha.interrupt();
+		this.interrupt();
+
 	}
 	
 	public void setControladorInicio(ControladorInicio controlador) {
