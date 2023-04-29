@@ -40,8 +40,8 @@ public class HiloEscucha extends Thread{
                 	else
                 		if(mensaje.equals("DESCONECTAR")){
 							controladorllamada.desconectar();
+							this.interrupt();
 						}
-
                 		else
                 			controladorllamada.muestraMensaje(socket.getPort()+": "+ mensaje);
 				}

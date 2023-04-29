@@ -92,10 +92,10 @@ public class ControladorSesionLlamada implements ActionListener {
     public void desconectar() {
     	try {
     		vista.esconder();
-        	vista.lanzarVentanaEmergente("Llamada finalizada");
-			this.conexionEnvio.stopServer();
-	        this.conexionReceptor.stopServer();
 	        this.controladorInicio = ControladorInicio.get(true);
+        	//vista.lanzarVentanaEmergente("Llamada finalizada");
+			this.conexionEnvio.stopServer();
+	        //this.conexionReceptor.stopServer();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

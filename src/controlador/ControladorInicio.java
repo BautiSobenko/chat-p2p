@@ -7,6 +7,7 @@ import conexion.ConexionReceptor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -67,11 +68,17 @@ public class ControladorInicio implements ActionListener {
                     this.conexionEnvio = new ConexionEnvio(IP, puerto);
                     controladorSesionLlamada = ControladorSesionLlamada.get(false);
                     controladorSesionLlamada.setConexionEnvio(this.conexionEnvio);
-                    conexionEnvio.envia(Integer.toString(miPuerto));
+                    conexionEnvio.envia( Integer.toString(miPuerto) );
                     controladorSesionLlamada.setConexionReceptor(conexionReceptor);
                     vista.lanzarVentanaEmergente("Esperando a ser atendido...");
+                    if( !ControladorRecepcionLlamada.get(false).isConexionAceptada() ){
+                        this.conexionEnvio.stopServer();
+                        controladorSesionLlamada.setConexionEnvio(null);
+                    }
                 } catch (SocketException ex) {
                     vista.error("Error en la conexion");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
                 break;
         }

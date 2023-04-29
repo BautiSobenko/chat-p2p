@@ -44,11 +44,14 @@ public class ConexionEnvio{
 	
 	
 	public void stopServer() throws IOException {
+
 		socket.close();
 		out.close();
+
 		this.Ip = null;
 		this.puerto = 0;
 		this.socket = null;
+
 	}
 
 }
