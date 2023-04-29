@@ -63,7 +63,7 @@ public class ControladorRecepcionLlamada implements ActionListener {
             break;
 
             case("Rechazar"):
-                conexionAceptada = false;
+                this.conexionAceptada = false;
                 this.vista.esconder();
             break;
         }

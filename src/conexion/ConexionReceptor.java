@@ -1,6 +1,5 @@
 package conexion;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -35,7 +34,7 @@ public class ConexionReceptor extends Thread{
 
 				this.socket = serverSocket.accept();
 
-				if (controladorInicio.noEnvie()) {
+				if (!controladorInicio.inicieConversacion()) {
 					ControladorRecepcionLlamada controladorRecepcion = ControladorRecepcionLlamada.get(false);
 					controladorRecepcion.setSocket(socket);
 					controladorRecepcion.setControladorInicio(controladorInicio);

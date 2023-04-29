@@ -95,7 +95,7 @@ public class ControladorSesionLlamada implements ActionListener {
 	        this.controladorInicio = ControladorInicio.get(true);
         	//vista.lanzarVentanaEmergente("Llamada finalizada");
 			this.conexionEnvio.stopServer();
-	        //this.conexionReceptor.stopServer();
+	        this.conexionReceptor.stopServer();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

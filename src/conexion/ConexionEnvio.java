@@ -1,13 +1,10 @@
 package conexion;
 
-import controlador.ControladorSesionLlamada;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-
 
 public class ConexionEnvio{
 
@@ -39,10 +36,12 @@ public class ConexionEnvio{
 	
 	public void envia(String msg) {
           out.println(msg);
-
 	}
-	
-	
+
+	public Socket getSocket() {
+		return socket;
+	}
+
 	public void stopServer() throws IOException {
 
 		socket.close();

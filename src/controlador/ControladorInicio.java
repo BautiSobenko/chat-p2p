@@ -61,7 +61,6 @@ public class ControladorInicio implements ActionListener {
             case "Conectar":
             	envio=1;
                 String IP = vista.getIP();
-                System.out.println(IP);
                 int puerto = vista.getPuerto();
                 this.vista.limpiarCampo();
                 try {
@@ -71,9 +70,11 @@ public class ControladorInicio implements ActionListener {
                     conexionEnvio.envia( Integer.toString(miPuerto) );
                     controladorSesionLlamada.setConexionReceptor(conexionReceptor);
                     vista.lanzarVentanaEmergente("Esperando a ser atendido...");
-                    if( !ControladorRecepcionLlamada.get(false).isConexionAceptada() ){
+
+                    if( conexionEnvio.getSocket() == null || conexionEnvio.getSocket().isClosed()){
                         this.conexionEnvio.stopServer();
                         controladorSesionLlamada.setConexionEnvio(null);
+                        break;
                     }
                 } catch (SocketException ex) {
                     vista.error("Error en la conexion");
@@ -89,8 +90,8 @@ public class ControladorInicio implements ActionListener {
     	this.miPuerto = puerto;
     }
     
-    public boolean noEnvie() {
-    	return envio==0;
+    public boolean inicieConversacion() {
+    	return envio == 1;
     }
     
     public void esconderVista() {
