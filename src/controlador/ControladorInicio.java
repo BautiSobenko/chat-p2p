@@ -4,9 +4,11 @@ import Vista.IVistaInicio;
 import Vista.VistaInicio;
 import conexion.ConexionEnvio;
 import conexion.ConexionReceptor;
+import configuracion.Configuracion;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
@@ -20,7 +22,7 @@ public class ControladorInicio implements ActionListener {
     private ConexionEnvio conexionEnvio;
     private int miPuerto;
     
-    int envio=0;
+    private static int envio=0;
     Socket socketCliente=null;
     String ultMensaje;
 
@@ -35,15 +37,17 @@ public class ControladorInicio implements ActionListener {
         if( controladorInicio == null) {
             controladorInicio = new ControladorInicio();
         }
-        if( mostrar )
+        if( mostrar ) {
             controladorInicio.vista.mostrar();
-
+        }
+        envio = 0;
         return controladorInicio;
     }
 
-    public void setConexionReceptor(ConexionReceptor conexion){
+    public void setConexionReceptor (ConexionReceptor conexion) throws IOException{
         this.conexionReceptor = conexion;
         this.conexionReceptor.setControladorInicio(this);
+        this.conexionReceptor.iniciaServidor();
         this.conexionReceptor.start();
     }
 
@@ -62,25 +66,29 @@ public class ControladorInicio implements ActionListener {
             	envio=1;
                 String IP = vista.getIP();
                 int puerto = vista.getPuerto();
-                this.vista.limpiarCampo();
-                try {
-                    this.conexionEnvio = new ConexionEnvio(IP, puerto);
-                    controladorSesionLlamada = ControladorSesionLlamada.get(false);
-                    controladorSesionLlamada.setConexionEnvio(this.conexionEnvio);
-                    conexionEnvio.envia( Integer.toString(miPuerto) );
-                    controladorSesionLlamada.setConexionReceptor(conexionReceptor);
-                    vista.lanzarVentanaEmergente("Esperando a ser atendido...");
-
-                    if( conexionEnvio.getSocket() == null || conexionEnvio.getSocket().isClosed()){
-                        this.conexionEnvio.stopServer();
-                        controladorSesionLlamada.setConexionEnvio(null);
-                        break;
-                    }
-                } catch (SocketException ex) {
-                    vista.error("Error en la conexion");
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                if( puerto!= this.miPuerto) {
+	                this.vista.limpiarCampo();
+	                try {
+	                    this.conexionEnvio = new ConexionEnvio(IP, puerto);
+	                    controladorSesionLlamada = ControladorSesionLlamada.get(false);
+	                    controladorSesionLlamada.setConexionEnvio(this.conexionEnvio);
+	                    conexionEnvio.envia( Integer.toString(miPuerto) );
+	                    controladorSesionLlamada.setConexionReceptor(conexionReceptor);
+	                    vista.lanzarVentanaEmergente("Esperando a ser atendido...");
+	
+	                    if( conexionEnvio.getSocket() == null || conexionEnvio.getSocket().isClosed()){
+	                        this.conexionEnvio.stopServer();
+	                        controladorSesionLlamada.setConexionEnvio(null);
+	                        break;
+	                    }
+	                } catch (SocketException ex) {
+	                    vista.error("Error en la conexion");
+	                } catch (IOException ex) {
+	                    throw new RuntimeException(ex);
+	                }
                 }
+                else
+                	this.vista.error("No se puede comunicar con su mismo puerto");
                 break;
         }
 
@@ -97,5 +105,11 @@ public class ControladorInicio implements ActionListener {
     public void esconderVista() {
     	this.vista.esconder();
     }
-    
+
+    public void verificarBoton(){
+        if (Configuracion.puertoValido())
+            this.vista.habilitarBotonConexion();
+        else
+            this.vista.deshabilitarBotonConexion();
+    }
 }

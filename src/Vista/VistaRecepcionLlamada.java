@@ -61,7 +61,7 @@ public class VistaRecepcionLlamada extends JFrame implements IVistaRecepcionLlam
 		btnRechazar.setBounds(57, 131, 102, 36);
 		contentPane.add(btnRechazar);
 		
-		lblPuerto = new JLabel("Llamada entrante del puerto: ");
+		lblPuerto = new JLabel("");
 		lblPuerto.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblPuerto.setBounds(76, 25, 299, 36);
 		contentPane.add(lblPuerto);
@@ -92,6 +92,6 @@ public class VistaRecepcionLlamada extends JFrame implements IVistaRecepcionLlam
 
 	@Override
 	public void setLabelPuerto(String puerto) {
-		this.lblPuerto.setText(lblPuerto.getText() + puerto);
+		this.lblPuerto.setText("Llamada entrante del puerto:  "+ puerto);
 	}
 }

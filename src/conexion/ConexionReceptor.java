@@ -28,8 +28,6 @@ public class ConexionReceptor extends Thread{
 	//Caso de modo escucha
 	public void run(){
 		try { 
-			serverSocket = new ServerSocket(puerto);
-			System.out.println("Esperando conexion en el puerto "+ puerto);
 			while ( true ) {
 
 				this.socket = serverSocket.accept();
@@ -46,7 +44,6 @@ public class ConexionReceptor extends Thread{
 			}
 			} catch (Exception e) {
 				e.printStackTrace();
-				System.out.println(e.getMessage() + "\n");
 			}
 	}
 
@@ -57,13 +54,17 @@ public class ConexionReceptor extends Thread{
 	
 	public void stopServer() {
 
-		this.puerto = 0;
+		//this.puerto = 0;
 		this.hiloEscucha.interrupt();
-		this.interrupt();
+		//this.interrupt();
 
 	}
 	
 	public void setControladorInicio(ControladorInicio controlador) {
 		this.controladorInicio = controlador;
+	}
+	
+	public void iniciaServidor() throws IOException{
+		serverSocket = new ServerSocket(puerto);
 	}
 }

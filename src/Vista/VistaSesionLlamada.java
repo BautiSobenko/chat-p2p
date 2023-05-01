@@ -108,4 +108,10 @@ public class VistaSesionLlamada extends JFrame implements IVistaSesionLlamada {
 		JOptionPane.showMessageDialog(this,string,"Error",JOptionPane.ERROR_MESSAGE);
 		
 	}
+
+	@Override
+	public void eliminarHistorial() {
+		// TODO Auto-generated method stub
+		this.txtArea.setText("");
+	}
 }

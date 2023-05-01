@@ -9,4 +9,5 @@ public interface IVistaConfiguracion {
 	public int getPuerto();
 	public void mostrar();
 	public void esconder();
+	void lanzarVentanaEmergente(String mensaje);
 }

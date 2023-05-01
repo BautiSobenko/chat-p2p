@@ -62,8 +62,10 @@ public class ControladorSesionLlamada implements ActionListener {
             case("Enviar"):
                 ultMensaje = vista.getMensaje();
                 vista.limpiarCampo();
-                this.conexionEnvio.envia(ultMensaje);
-                this.muestraMensaje("Yo: " + ultMensaje);
+                if(ultMensaje!=null) {
+                	this.conexionEnvio.envia(ultMensaje);
+                	this.muestraMensaje("Yo: " + ultMensaje);
+                }
             break;
 
             case("Desconectar"):
@@ -73,7 +75,7 @@ public class ControladorSesionLlamada implements ActionListener {
         }
     }
     
-    public void creaConexionEnvio(int puerto) {
+    public void creaConexionEnvioAcepto(int puerto) {
     	try {
 			this.conexionEnvio = new ConexionEnvio("localhost",puerto);
 			this.conexionEnvio.envia("ACEPTO LLAMADA");
@@ -95,12 +97,26 @@ public class ControladorSesionLlamada implements ActionListener {
 	        this.controladorInicio = ControladorInicio.get(true);
         	//vista.lanzarVentanaEmergente("Llamada finalizada");
 			this.conexionEnvio.stopServer();
-	        this.conexionReceptor.stopServer();
+			this.conexionEnvio = null;
+			vista.eliminarHistorial();
+	        //this.conexionReceptor.stopServer();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
     }
-
+    
+    public void creaConexionEnvioRechazo(int puerto) {
+    	try {
+			this.conexionEnvio = new ConexionEnvio("localhost",puerto);
+			this.conexionEnvio.envia("RECHAZO LLAMADA");
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public void llamadaRechazada() {
+    	this.vista.error("La llamada a sido rechazada");
+    }
 
 
 }

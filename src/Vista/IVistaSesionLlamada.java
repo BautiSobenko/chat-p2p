@@ -12,4 +12,5 @@ public interface IVistaSesionLlamada {
     void limpiarCampo();
 	public void lanzarVentanaEmergente(String string);
     public void error(String string);
+    void eliminarHistorial();
 }

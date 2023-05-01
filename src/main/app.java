@@ -1,6 +1,7 @@
 package main;
 
 import controlador.ControladorConfiguracion;
+import controlador.ControladorInicio;
 
 public class app extends Thread{
 

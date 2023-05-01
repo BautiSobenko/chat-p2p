@@ -16,7 +16,8 @@ public class ControladorRecepcionLlamada implements ActionListener {
     private static Socket socket;
     private boolean conexionAceptada;
     private ControladorInicio controladorInicio;
-
+    private HiloEscucha hilo;
+    
     private ControladorRecepcionLlamada() {
         this.vista = new VistaRecepcionLlamada();
         this.vista.setActionListener(this);
@@ -54,7 +55,9 @@ public class ControladorRecepcionLlamada implements ActionListener {
 
             case("Aceptar"):
                 this.conexionAceptada = true;
-                new HiloEscucha(socket, ControladorSesionLlamada.get(false)).start();
+                hilo = new HiloEscucha(socket, ControladorSesionLlamada.get(false));
+                hilo.aceptoLlamada();
+                hilo.start();
                 controladorInicio.esconderVista();
                 ControladorSesionLlamada.get(true);
 
@@ -64,6 +67,9 @@ public class ControladorRecepcionLlamada implements ActionListener {
 
             case("Rechazar"):
                 this.conexionAceptada = false;
+            	hilo = new HiloEscucha(socket, ControladorSesionLlamada.get(false));
+            	hilo.rechazoLlamada();
+            	hilo.start();
                 this.vista.esconder();
             break;
         }

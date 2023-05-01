@@ -13,6 +13,7 @@ public class HiloEscucha extends Thread{
 	private Socket socket;
 	private ControladorSesionLlamada controladorllamada;
 	private ControladorInicio controladorInicio;
+	private int acepteLlamada = 0;
 	
 	public HiloEscucha(Socket socket, ControladorSesionLlamada controlador) {
 		this.socket = socket;
@@ -27,28 +28,43 @@ public class HiloEscucha extends Thread{
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             /* Mensajes recibidos */
             String mensaje;
-            while (true) {
+            while (! this.isInterrupted()) {
                 mensaje = in.readLine();
-                if (controladorllamada.noTengoConexionEnvio()) {
-                	controladorllamada.creaConexionEnvio(Integer.parseInt(mensaje));
-                }
-                else{
-                	if(mensaje.equals("ACEPTO LLAMADA")) {
-                		controladorllamada.get(true);
-                		controladorInicio.esconderVista();
-                	}
-                	else
-                		if(mensaje.equals("DESCONECTAR")){
-							controladorllamada.desconectar();
-							this.interrupt();
-						}
-                		else
-                			controladorllamada.muestraMensaje(socket.getPort()+": "+ mensaje);
+                if(mensaje!=null) {
+	                if (controladorllamada.noTengoConexionEnvio()) {
+	                	if (acepteLlamada == 1)
+	                		controladorllamada.creaConexionEnvioAcepto(Integer.parseInt(mensaje));
+	                	else
+	                		controladorllamada.creaConexionEnvioRechazo(Integer.parseInt(mensaje));
+	                }
+	                else{
+	                	if(mensaje.equals("ACEPTO LLAMADA")) {
+	                		controladorllamada.get(true);
+	                		controladorInicio.esconderVista();
+	                	}
+	                	else {
+	                		if(mensaje.equals("RECHAZO LLAMADA")) {
+	                			controladorllamada.llamadaRechazada();
+	                			controladorllamada.desconectar();
+	                			this.interrupt();
+	                		}
+		                	else
+		                		if(mensaje.equals("DESCONECTAR")){
+									controladorllamada.desconectar();
+									this.interrupt();
+								}
+		                		else
+		                			controladorllamada.muestraMensaje(socket.getPort()+": "+ mensaje);
+	                		}
+	                }   
 				}
             }
         } catch(Exception e) {
-            System.out.println(e.getMessage());
+         e.printStackTrace();
         }
     }
+	
+	public void aceptoLlamada() { this.acepteLlamada = 1;}
+	public void rechazoLlamada() { this.acepteLlamada = 0;}
 	
 }
