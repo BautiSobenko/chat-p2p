@@ -1,7 +1,7 @@
 package controlador;
 
-import Vista.IVistaRecepcionLlamada;
-import Vista.VistaRecepcionLlamada;
+import vista.interfaces.IVistaRecepcionLlamada;
+import vista.vistas.VistaRecepcionLlamada;
 import conexion.HiloEscucha;
 
 import java.awt.event.ActionEvent;

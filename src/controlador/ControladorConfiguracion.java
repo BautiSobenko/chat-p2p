@@ -4,9 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import Vista.*;
+import vista.interfaces.IVistaConfiguracion;
 import conexion.ConexionReceptor;
 import configuracion.Configuracion;
+import vista.vistas.VistaConfiguracionPuerto;
 
 
 public class ControladorConfiguracion implements ActionListener{

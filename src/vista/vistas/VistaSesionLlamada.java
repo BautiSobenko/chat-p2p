@@ -1,4 +1,6 @@
-package Vista;
+package vista.vistas;
+
+import vista.interfaces.IVistaSesionLlamada;
 
 import java.awt.EventQueue;
 

@@ -1,5 +1,6 @@
-package Vista;
+package vista.vistas;
 
+import vista.interfaces.IVistaConfiguracion;
 import configuracion.Configuracion;
 
 import java.awt.EventQueue;
@@ -9,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 
-public class VistaConfiguracionPuerto extends JFrame implements IVistaConfiguracion  {
+public class VistaConfiguracionPuerto extends JFrame implements IVistaConfiguracion {
 
 	private JPanel contentPane;
 	private JTextField txtPuerto;

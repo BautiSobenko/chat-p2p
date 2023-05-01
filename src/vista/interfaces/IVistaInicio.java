@@ -1,4 +1,4 @@
-package Vista;
+package vista.interfaces;
 
 import java.awt.event.ActionListener;
 
@@ -14,4 +14,5 @@ public interface IVistaInicio {
     public void error(String mensaje);
     void deshabilitarBotonConexion();
     void habilitarBotonConexion();
+    void tituloInstancia(int miPuerto);
 }

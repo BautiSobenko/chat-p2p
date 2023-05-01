@@ -1,5 +1,6 @@
-package Vista;
+package vista.vistas;
 
+import vista.interfaces.IVistaInicio;
 import configuracion.Configuracion;
 
 import java.awt.EventQueue;
@@ -128,6 +129,8 @@ public class VistaInicio extends JFrame implements IVistaInicio {
 		this.txtPuerto.setText("");
 	}
 
+
+
 	@Override
 	public void mostrar() {
 		this.setVisible(true);
@@ -140,13 +143,18 @@ public class VistaInicio extends JFrame implements IVistaInicio {
 
 	@Override
 	public void error(String mensaje) {
-		// TODO Auto-generated method stub
 		JOptionPane.showMessageDialog(this,mensaje,"Error",JOptionPane.ERROR_MESSAGE);
 	}
 
 	public void habilitarBotonConexion(){
 		this.btnConectar.setEnabled(true);
 	}
+
+	@Override
+	public void tituloInstancia(int puerto) {
+		this.setTitle("Inicio | Puerto: " + puerto);
+	}
+
 	public void deshabilitarBotonConexion(){
 		this.btnConectar.setEnabled(false);
 	}

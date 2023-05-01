@@ -1,4 +1,6 @@
-package Vista;
+package vista.vistas;
+
+import vista.interfaces.IVistaRecepcionLlamada;
 
 import java.awt.EventQueue;
 
@@ -11,7 +13,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
 
-public class VistaRecepcionLlamada extends JFrame implements IVistaRecepcionLlamada{
+public class VistaRecepcionLlamada extends JFrame implements IVistaRecepcionLlamada {
 
 	private JPanel contentPane;
 	private JButton btnAceptar;

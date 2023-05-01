@@ -18,7 +18,6 @@ public class ConexionReceptor extends Thread{
 	private Thread hiloEscucha;
 	private Socket socket;
 	private ServerSocket serverSocket;
-	private boolean stop;
 
     public ConexionReceptor(String IP, int puerto) throws IOException{
         this.puerto = puerto;
@@ -42,9 +41,7 @@ public class ConexionReceptor extends Thread{
 					this.hiloEscucha.start();
 				}
 			}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			} catch (Exception ignored) {}
 	}
 
 	public void setControladorLlamada(ControladorSesionLlamada controlador) {
@@ -54,9 +51,12 @@ public class ConexionReceptor extends Thread{
 	
 	public void stopServer() {
 
-		//this.puerto = 0;
-		this.hiloEscucha.interrupt();
-		//this.interrupt();
+		try {
+			this.interrupt();
+			this.serverSocket.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 
 	}
 	

@@ -1,14 +1,13 @@
 package controlador;
 
-import Vista.IVistaInicio;
-import Vista.VistaInicio;
+import vista.interfaces.IVistaInicio;
+import vista.vistas.VistaInicio;
 import conexion.ConexionEnvio;
 import conexion.ConexionReceptor;
 import configuracion.Configuracion;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
@@ -23,8 +22,6 @@ public class ControladorInicio implements ActionListener {
     private int miPuerto;
     
     private static int envio=0;
-    Socket socketCliente=null;
-    String ultMensaje;
 
     private ControladorSesionLlamada controladorSesionLlamada;
     
@@ -40,7 +37,11 @@ public class ControladorInicio implements ActionListener {
         if( mostrar ) {
             controladorInicio.vista.mostrar();
         }
+
+        controladorInicio.vista.tituloInstancia(controladorInicio.miPuerto);
+
         envio = 0;
+
         return controladorInicio;
     }
 
@@ -58,6 +59,7 @@ public class ControladorInicio implements ActionListener {
 
         switch (comando) {
             case "Configuracion":
+                this.conexionReceptor.stopServer();
                 ControladorConfiguracion.get(true);
                 this.vista.esconder();
             break;

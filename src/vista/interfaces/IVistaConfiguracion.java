@@ -1,4 +1,4 @@
-package Vista;
+package vista.interfaces;
 
 import java.awt.event.ActionListener;
 

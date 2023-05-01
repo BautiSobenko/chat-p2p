@@ -1,7 +1,7 @@
 package controlador;
 
-import Vista.IVistaSesionLlamada;
-import Vista.VistaSesionLlamada;
+import vista.interfaces.IVistaSesionLlamada;
+import vista.vistas.VistaSesionLlamada;
 import conexion.ConexionEnvio;
 import conexion.ConexionReceptor;
 
@@ -16,15 +16,12 @@ public class ControladorSesionLlamada implements ActionListener {
 
     private IVistaSesionLlamada vista;
     private ConexionEnvio conexionEnvio=null;
-    private boolean primerEnvio;
     private ConexionReceptor conexionReceptor;
-    private ControladorInicio controladorInicio; 
 
 
     private ControladorSesionLlamada() {
         this.vista = new VistaSesionLlamada();
         this.vista.setActionListener(this);
-        this.primerEnvio = false;
     }
 
     public static ControladorSesionLlamada get(boolean mostrar){
@@ -94,12 +91,10 @@ public class ControladorSesionLlamada implements ActionListener {
     public void desconectar() {
     	try {
     		vista.esconder();
-	        this.controladorInicio = ControladorInicio.get(true);
-        	//vista.lanzarVentanaEmergente("Llamada finalizada");
+	        ControladorInicio.get(true);
 			this.conexionEnvio.stopServer();
 			this.conexionEnvio = null;
 			vista.eliminarHistorial();
-	        //this.conexionReceptor.stopServer();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
