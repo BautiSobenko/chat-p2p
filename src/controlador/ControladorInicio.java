@@ -114,4 +114,18 @@ public class ControladorInicio implements ActionListener {
         else
             this.vista.deshabilitarBotonConexion();
     }
+    
+    public void reiniciaReceptor() {
+    	this.conexionReceptor.stopServer();
+    	try {
+			this.conexionReceptor = new ConexionReceptor("localhost",this.miPuerto);
+			this.conexionReceptor.setControladorInicio(this);
+			this.conexionReceptor.iniciaServidor();
+			this.conexionReceptor.start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
 }

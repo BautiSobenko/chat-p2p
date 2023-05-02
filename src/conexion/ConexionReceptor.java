@@ -27,7 +27,6 @@ public class ConexionReceptor extends Thread{
 	//Caso de modo escucha
 	public void run(){
 		try { 
-			while ( true ) {
 
 				this.socket = serverSocket.accept();
 
@@ -40,8 +39,9 @@ public class ConexionReceptor extends Thread{
 					this.hiloEscucha = new HiloEscucha(socket, ControladorSesionLlamada.get(false));
 					this.hiloEscucha.start();
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			} catch (Exception ignored) {}
 	}
 
 	public void setControladorLlamada(ControladorSesionLlamada controlador) {

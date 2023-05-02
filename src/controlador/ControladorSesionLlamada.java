@@ -91,6 +91,7 @@ public class ControladorSesionLlamada implements ActionListener {
     public void desconectar() {
     	try {
     		vista.esconder();
+	        ControladorInicio.get(false).reiniciaReceptor();
 	        ControladorInicio.get(true);
 			this.conexionEnvio.stopServer();
 			this.conexionEnvio = null;
@@ -108,6 +109,7 @@ public class ControladorSesionLlamada implements ActionListener {
 			e.printStackTrace();
 		}
     }
+    
     
     public void llamadaRechazada() {
     	this.vista.error("La llamada a sido rechazada");
